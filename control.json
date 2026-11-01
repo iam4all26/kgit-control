@@ -1,7 +1,7 @@
 {
   "latest_build": 90,
   "latest_version": "0.1.1",
-  "min_build": 1,
+  "min_build": 90,
   "store_url": "https://play.google.com/store/apps/details?id=africa.kainuwa.k_git_studio",
   "notes": "",
   "force_message": "Please update K-Git Studio to continue.",
