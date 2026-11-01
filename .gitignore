@@ -1,0 +1,11 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+# Secrets - never commit
+.env
+*.jks
+*.keystore
+key.properties
+*.pem
+*.p12
