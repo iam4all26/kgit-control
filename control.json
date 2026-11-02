@@ -44,6 +44,12 @@
       "name": "WhatsApp Channel",
       "handle": "click to join",
       "url": "https://whatsapp.com/channel/0029VaQFejpId7nRbTjk043G"
+    },
+    {
+      "id": "tiktok",
+      "name": "Tiktok",
+      "handle": "@kainuwaafrica",
+      "url": "https://tiktok.com/@kainuwaafrica"
     }
   ]
 }
