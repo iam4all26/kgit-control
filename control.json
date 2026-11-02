@@ -5,5 +5,45 @@
   "store_url": "https://play.google.com/store/apps/details?id=com.kainuwa.academy",
   "notes": "We have added new updates, and our app now supports plugin",
   "force_message": "Please update K-Git Studio to continue.",
-  "announcements": []
+  "announcements": [],
+  "footer": "Made with {heart} for developers\nby Kainuwa Digital Africa Ltd",
+  "about": "K-Git Studio is a mobile development workspace by Kainuwa Digital Africa Ltd. Write code, commit to GitHub, run builds and ship apps, all from your phone.",
+  "socials": [
+    {
+      "id": "website",
+      "name": "Website",
+      "handle": "kainuwa.africa",
+      "url": "https://kainuwa.africa"
+    },
+    {
+      "id": "x",
+      "name": "X (Twitter)",
+      "handle": "@kainuwaafrica",
+      "url": "https://x.com/kainuwaafrica"
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "handle": "@kainuwaafrica",
+      "url": "https://instagram.com/kainuwaafrica"
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "handle": "kainuwaafrica",
+      "url": "https://facebook.com/kainuwaafrica"
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "handle": "@kainuwaafrica",
+      "url": "https://t.me/kainuwaafrica"
+    },
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp Channel",
+      "handle": "click to join",
+      "url": "https://whatsapp.com/channel/0029VaQFejpId7nRbTjk043G"
+    }
+  ]
 }
