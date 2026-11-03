@@ -42,7 +42,7 @@
     {
       "id": "whatsapp",
       "name": "WhatsApp Channel",
-      "handle": "click to join",
+      "handle": "Click to Join",
       "url": "https://whatsapp.com/channel/0029VaQFejpId7nRbTjk043G"
     },
     {
@@ -50,6 +50,12 @@
       "name": "Tiktok",
       "handle": "@kainuwaafrica",
       "url": "https://tiktok.com/@kainuwaafrica"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "handle": "@kainuwaafrica",
+      "url": "https://youtube.com/@kainuwaafrica"
     }
   ]
 }
