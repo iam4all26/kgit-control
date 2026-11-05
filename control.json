@@ -18,7 +18,7 @@
       "folder": "templates/11website2app",
       "zip": "dist/web-to-app.zip",
       "version": 2,
-      "featured": true
+      "featured": false
     }
   ],
   "footer": "Made with {heart} for developers\nby Kainuwa Digital Africa Ltd",
