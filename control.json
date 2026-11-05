@@ -14,10 +14,10 @@
       "title": "Web to App",
       "description": "Turn any website into an Android application with a customizable splash screen and navigation.\nWebsite URL\nApp name and package ID\nSplash screen and app icon\nLoading indicator\nBack navigation\nJavaScript support\nFile upload and download\nPull-to-refresh\nInternet error screen",
       "category": "Web",
-      "icon": "",
+      "icon": "templates/icons/web-to-app.png",
       "folder": "templates/11website2app",
       "zip": "dist/web-to-app.zip",
-      "version": 2,
+      "version": 3,
       "featured": false
     }
   ],
