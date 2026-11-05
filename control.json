@@ -7,6 +7,8 @@
   "notes": "We have added new features: \nrepo lock \nadjust editor view\nAllow app testing installation \netc",
   "force_message": "Please update K-Git Studio to explore these amazing features",
   "announcements": [],
+  "templates_repo": "iam4all26/34412387temp",
+  "templates": [],
   "footer": "Made with {heart} for developers\nby Kainuwa Digital Africa Ltd",
   "about": "K-Git Studio is a mobile development workspace by Kainuwa Digital Africa Ltd. Write code, commit to GitHub, run builds and ship apps, all from your phone.",
   "socials": [
