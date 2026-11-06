@@ -26,6 +26,17 @@
       "screenshots": [
         "templates/shots/web-to-app-1793932254929-0.png"
       ]
+    },
+    {
+      "id": "shelfreader",
+      "title": "Shelfreader",
+      "description": "complete offline PDF reader that transforms uploaded PDF documents into a personal digital library. Users can organize books into categories and visual shelves, add custom covers, read without internet, and automatically resume from where they stopped.",
+      "category": "Flutter",
+      "icon": "",
+      "folder": "templates/11ShelfReader",
+      "zip": "dist/shelfreader.zip",
+      "version": 2,
+      "featured": false
     }
   ],
   "footer": "Made with {heart} for developers\nby Kainuwa Digital Africa Ltd",
