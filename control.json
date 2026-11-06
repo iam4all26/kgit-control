@@ -17,8 +17,15 @@
       "icon": "templates/icons/web-to-app.png",
       "folder": "templates/11website2app",
       "zip": "dist/web-to-app.zip",
-      "version": 3,
-      "featured": false
+      "version": 4,
+      "featured": false,
+      "included": [
+        "Home screen",
+        "Domain Connector"
+      ],
+      "screenshots": [
+        "templates/shots/web-to-app-1793932254929-0.png"
+      ]
     }
   ],
   "footer": "Made with {heart} for developers\nby Kainuwa Digital Africa Ltd",
