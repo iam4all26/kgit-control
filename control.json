@@ -17,7 +17,7 @@
       "icon": "templates/icons/web-to-app.png",
       "folder": "templates/11website2app",
       "zip": "dist/web-to-app.zip",
-      "version": 4,
+      "version": 5,
       "featured": false,
       "included": [
         "Home screen",
@@ -25,7 +25,8 @@
       ],
       "screenshots": [
         "templates/shots/web-to-app-1793932254929-0.png"
-      ]
+      ],
+      "access": "ad"
     },
     {
       "id": "shelfreader",
@@ -39,6 +40,11 @@
       "featured": false
     }
   ],
+  "ads": {
+    "enabled": false,
+    "rewarded_unit": "",
+    "fallback_seconds": 30
+  },
   "footer": "Made with {heart} for developers\nby Kainuwa Digital Africa Ltd",
   "about": "K-Git Studio is a mobile development workspace by Kainuwa Digital Africa Ltd. Write code, commit to GitHub, run builds and ship apps, all from your phone.",
   "socials": [
