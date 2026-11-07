@@ -41,7 +41,7 @@
     }
   ],
   "ads": {
-    "enabled": false,
+    "enabled": true,
     "rewarded_unit": "",
     "fallback_seconds": 30
   },
