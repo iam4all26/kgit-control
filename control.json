@@ -37,7 +37,8 @@
       "folder": "templates/11ShelfReader",
       "zip": "dist/shelfreader.zip",
       "version": 2,
-      "featured": false
+      "featured": false,
+      "access": "ad"
     }
   ],
   "ads": {
