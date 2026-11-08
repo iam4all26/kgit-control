@@ -17,14 +17,12 @@
       "icon": "templates/icons/web-to-app.png",
       "folder": "templates/11website2app",
       "zip": "dist/web-to-app.zip",
-      "version": 5,
+      "version": 6,
       "featured": false,
+      "banner": "templates/banners/web-to-app-1794112377405.png",
       "included": [
         "Home screen",
         "Domain Connector"
-      ],
-      "screenshots": [
-        "templates/shots/web-to-app-1793932254929-0.png"
       ],
       "access": "ad"
     },
@@ -36,8 +34,9 @@
       "icon": "",
       "folder": "templates/11ShelfReader",
       "zip": "dist/shelfreader.zip",
-      "version": 2,
+      "version": 4,
       "featured": false,
+      "banner": "templates/banners/shelfreader-1794112397539.png",
       "access": "ad"
     }
   ],
