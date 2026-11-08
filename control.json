@@ -1,7 +1,7 @@
 {
-  "latest_build": 6,
+  "latest_build": 9,
   "latest_version": "1.0.1",
-  "min_build": 6,
+  "min_build": 9,
   "store_url": "https://play.google.com/store/apps/details?id=com.kainuwa.kgit",
   "privacy_url": "",
   "notes": "We have added new features: \nrepo lock \nadjust editor view\nAllow app testing installation \netc",
