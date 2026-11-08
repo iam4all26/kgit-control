@@ -1,5 +1,5 @@
 # Installed by K-Git Studio. Run it from the Builds tab.
-# kgit-workflow-version: 6
+# kgit-workflow-version: 7
 name: K-Git Build
 
 on:
@@ -318,6 +318,21 @@ jobs:
           else
             echo "::warning::Signing secrets are not all set. This build is NOT signed with your release key."
           fi
+
+      - name: AAB needs the real release key
+        if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
+        env:
+          KEY_KIND: ${{ secrets.ANDROID_KEYSTORE_KIND }}
+        run: |
+          if [ "${KGIT_SIGNED:-}" != "true" ]; then
+            echo "::error::An AAB for Google Play must be signed with your real release key, but the four signing secrets (ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD) are not all set. Open Release Signing in K-Git Studio, add them, then build again. An APK can still be built without them for testing."
+            exit 1
+          fi
+          if [ "${KEY_KIND:-}" = "test" ]; then
+            echo "::error::The signing key in this repository is a TEST key (its password is the package name). It must never be used for Google Play. Create a release key or upload your own in Release Signing, then build the AAB again."
+            exit 1
+          fi
+          echo "Release key found. Building the AAB with it."
 
       - name: Configure release signing
         if: ${{ env.KGIT_SIGNED == 'true' }}
