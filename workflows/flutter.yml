@@ -1,5 +1,5 @@
 # Installed by K-Git Studio. Run it from the Builds tab.
-# kgit-workflow-version: 4
+# kgit-workflow-version: 5
 name: K-Git Build
 
 on:
@@ -61,6 +61,32 @@ jobs:
             if [ -n "$NAME" ]; then
               sed -i "s|android:label=\"[^\"]*\"|android:label=\"$NAME\"|" android/app/src/main/AndroidManifest.xml
               echo "App name: $NAME"
+            fi
+          fi
+
+      - name: Fetch Gradle with retries (GitHub release downloads sometimes return 504)
+        run: |
+          props=android/gradle/wrapper/gradle-wrapper.properties
+          if [ -f "$props" ]; then
+            url="$(grep '^distributionUrl=' "$props" | head -1 | cut -d= -f2- | sed 's#\\:#:#g')"
+            name="$(basename "$url")"
+            ver="$(echo "$name" | sed -E 's/^gradle-(.*)-(all|bin)\.zip$/\1/')"
+            bin="gradle-${ver}-bin.zip"
+            ok=0
+            for src in "https://downloads.gradle.org/distributions/$bin" "https://services.gradle.org/distributions/$bin" "https://github.com/gradle/gradle-distributions/releases/download/v${ver}/$bin"; do
+              echo "Trying $src"
+              if curl -fL --retry 6 --retry-all-errors --retry-delay 10 --connect-timeout 30 -o "/tmp/$bin" "$src" && unzip -tq "/tmp/$bin" >/dev/null 2>&1; then
+                ok=1
+                break
+              fi
+            done
+            if [ "$ok" = "1" ]; then
+              grep -v '^distributionUrl=\|^distributionSha256Sum=' "$props" > /tmp/gw.properties
+              printf 'distributionUrl=file\\:///tmp/%s\n' "$bin" >> /tmp/gw.properties
+              cp /tmp/gw.properties "$props"
+              echo "Gradle $ver downloaded and used from /tmp/$bin"
+            else
+              echo "::warning::Could not pre-download Gradle; the wrapper will try by itself."
             fi
           fi
 
