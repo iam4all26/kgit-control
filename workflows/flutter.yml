@@ -1,5 +1,5 @@
 # Installed by K-Git Studio. Run it from the Builds tab.
-# kgit-workflow-version: 5
+# kgit-workflow-version: 6
 name: K-Git Build
 
 on:
@@ -62,6 +62,42 @@ jobs:
               sed -i "s|android:label=\"[^\"]*\"|android:label=\"$NAME\"|" android/app/src/main/AndroidManifest.xml
               echo "App name: $NAME"
             fi
+          fi
+
+      - name: Network resilience (Maven Central mirror, longer timeouts, retries)
+        run: |
+          # Some downloads (for example Kotlin compiler jars) are redirected to github.com release
+          # pages, which time out on busy days. Use Google's Maven Central mirror when it answers,
+          # and give Gradle longer timeouts and more retries.
+          mkdir -p "$HOME/.gradle/init.d"
+          {
+            echo "systemProp.org.gradle.internal.http.connectionTimeout=180000"
+            echo "systemProp.org.gradle.internal.http.socketTimeout=300000"
+            echo "systemProp.org.gradle.internal.repository.max.retries=8"
+            echo "systemProp.org.gradle.internal.repository.initial.backoff=3000"
+          } >> "$HOME/.gradle/gradle.properties"
+          MIRROR="https://maven-central.storage-download.googleapis.com/maven2/"
+          if curl -fsI --max-time 20 "${MIRROR}org/jetbrains/kotlin/kotlin-stdlib/2.0.0/kotlin-stdlib-2.0.0.pom" >/dev/null; then
+            cat > "$HOME/.gradle/init.d/kgit-mirror.gradle" <<'GRADLE'
+          def mirror = 'https://maven-central.storage-download.googleapis.com/maven2/'
+          def fix = { repos ->
+            repos.all { r ->
+              if (r instanceof MavenArtifactRepository && r.url != null && r.url.toString().contains('repo.maven.apache.org')) {
+                r.url = mirror
+              }
+            }
+          }
+          gradle.settingsEvaluated { s ->
+            fix(s.pluginManagement.repositories)
+          }
+          gradle.allprojects { p ->
+            fix(p.repositories)
+            fix(p.buildscript.repositories)
+          }
+          GRADLE
+            echo "Using the Maven Central mirror."
+          else
+            echo "Mirror not reachable; using Maven Central directly."
           fi
 
       - name: Fetch Gradle with retries (GitHub release downloads sometimes return 504)
