@@ -64,40 +64,66 @@ jobs:
             fi
           fi
 
-      - name: Network resilience (Maven Central mirror, longer timeouts, retries)
+      
+      - name: Network resilience (Kotlin and Gradle dependency resolution)
         run: |
-          # Some downloads (for example Kotlin compiler jars) are redirected to github.com release
-          # pages, which time out on busy days. Use Google's Maven Central mirror when it answers,
-          # and give Gradle longer timeouts and more retries.
-          mkdir -p "$HOME/.gradle/init.d"
-          {
-            echo "systemProp.org.gradle.internal.http.connectionTimeout=180000"
-            echo "systemProp.org.gradle.internal.http.socketTimeout=300000"
-            echo "systemProp.org.gradle.internal.repository.max.retries=8"
-            echo "systemProp.org.gradle.internal.repository.initial.backoff=3000"
-          } >> "$HOME/.gradle/gradle.properties"
+          set -euo pipefail
+
           MIRROR="https://maven-central.storage-download.googleapis.com/maven2/"
-          if curl -fsI --max-time 20 "${MIRROR}org/jetbrains/kotlin/kotlin-stdlib/2.0.0/kotlin-stdlib-2.0.0.pom" >/dev/null; then
-            cat > "$HOME/.gradle/init.d/kgit-mirror.gradle" <<'GRADLE'
+
+          mkdir -p "$HOME/.gradle/init.d"
+          touch "$HOME/.gradle/gradle.properties"
+
+          cat >> "$HOME/.gradle/gradle.properties" <<'PROPS'
+          systemProp.org.gradle.internal.http.connectionTimeout=180000
+          systemProp.org.gradle.internal.http.socketTimeout=300000
+          systemProp.org.gradle.internal.repository.max.retries=8
+          systemProp.org.gradle.internal.repository.initial.backoff=3000
+          PROPS
+
+          if curl -fsSI --max-time 20 "${MIRROR}org/jetbrains/kotlin/kotlin-stdlib/2.3.20/kotlin-stdlib-2.3.20.pom" >/dev/null; then
+            echo "Google Maven Central mirror contains Kotlin 2.3.20."
+            USE_MIRROR=true
+          else
+            echo "::warning::Google Maven mirror does not currently provide Kotlin 2.3.20. Maven Central will be used directly."
+            USE_MIRROR=false
+          fi
+
+          cat > "$HOME/.gradle/init.d/kgit-mirror.gradle" <<'GRADLE'
           def mirror = 'https://maven-central.storage-download.googleapis.com/maven2/'
-          def fix = { repos ->
-            repos.all { r ->
-              if (r instanceof MavenArtifactRepository && r.url != null && r.url.toString().contains('repo.maven.apache.org')) {
-                r.url = mirror
+
+          gradle.beforeSettings { settings ->
+              settings.pluginManagement.repositories {
+                  if (System.getenv('KGIT_USE_MAVEN_MIRROR') == 'true') {
+                      maven {
+                          name = 'KGitGoogleMavenCentralMirror'
+                          url = uri(mirror)
+                      }
+                  }
+                  mavenCentral()
               }
-            }
           }
-          gradle.settingsEvaluated { s ->
-            fix(s.pluginManagement.repositories)
-          }
-          gradle.allprojects { p ->
-            fix(p.repositories)
-            fix(p.buildscript.repositories)
+
+          gradle.beforeProject { project ->
+              project.buildscript.repositories {
+                  if (System.getenv('KGIT_USE_MAVEN_MIRROR') == 'true') {
+                      maven {
+                          name = 'KGitGoogleMavenCentralMirror'
+                          url = uri(mirror)
+                      }
+                  }
+                  mavenCentral()
+              }
           }
           GRADLE
-            echo "Using the Maven Central mirror."
+
+          if [ "$USE_MIRROR" = "true" ]; then
+            echo "KGIT_USE_MAVEN_MIRROR=true" >> "$GITHUB_ENV"
           else
-            echo "Mirror not reachable; using Maven Central directly."
+            echo "KGIT_USE_MAVEN_MIRROR=false" >> "$GITHUB_ENV"
+          fi
+
+          echo "Gradle repository initialization completed."
           fi
 
       - name: Fetch Gradle with retries (GitHub release downloads sometimes return 504)
