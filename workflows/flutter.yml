@@ -131,8 +131,6 @@ jobs:
 
           echo "Gradle repository initialization completed."
 
-          fi
-
       - name: Fetch Gradle with retries (GitHub release downloads sometimes return 504)
         run: |
           props=android/gradle/wrapper/gradle-wrapper.properties
